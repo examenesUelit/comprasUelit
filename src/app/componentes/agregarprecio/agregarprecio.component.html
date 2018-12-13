@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <form #formGuardar="ngForm" (ngSubmit)=onCambiarPrecio(formGuardar)>
+        <h3>Agregar Precio a</h3>
+        <h4>{{ nombre }}</h4>
+        <br>
+        <div class="form-group">
+          <h5>Precio</h5>
+          <div class="form-group">
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="number" id="precio" name="precio" [(ngModel)]="producto.precio" min="1" class="form-control"
+                  placeholder="Precio" required />
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <h5>Tienda</h5>
+          <select type="text" id="tienda" name="tienda" [(ngModel)]="producto.tienda" class="form-control" placeholder="Tienda"
+            required>
+            <option>Aurrera</option>
+            <option>Soriana</option>
+            <option>La Comer</option>
+            <option>Walmart</option>
+            <option>Oxxo</option>
+          </select>
+        </div>
+        <br>
+        <div class="form-group">
+          <button type="submit" class="btn btn-lg btn-block btn-outline-success"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

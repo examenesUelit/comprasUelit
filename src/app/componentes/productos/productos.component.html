@@ -1,0 +1,54 @@
+<!--NOMBRE DEL PRODUCTO-->
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <span class="btn-lg btn-primary btn-block text-center">{{ producto.nombre }}</span>
+    </div>
+  </div>
+</div>
+
+<!--PRODUCTO MÁS BARATO-->
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <span class="btn-lg btn-success btn-block text-center"> {{ producto.tienda }} &nbsp; $ {{ producto.precio }}</span>
+    </div>
+  </div>
+</div>
+
+<!--TABLA DE LOS PRODUCTOS RESTANTES-->
+<div class="container producto" *ngIf="existeDetalle">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <table class="table table-hover">
+        <tbody *ngFor="let detalle of detalle">
+          <tr class="table-light">
+            <th scope="row">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
+                  <span>{{ detalle.precio }}</span>
+                </div>
+              </div>
+            </th>
+            <td>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
+                  <span class="btn btn-success text-center disabled">$ {{ detalle.precio }}</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--AGREGAR NUEVOS PRODUCTOS-->
+<div class="container fixed-bottom">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <a class="btn btn-lg btn-outline-info btn-block" routerLink="/precio/agregar/{{ producto.id }}">Añadir Precio</a>
+    </div>
+  </div>
+</div>

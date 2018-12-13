@@ -1,0 +1,7 @@
+a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus{
+    color: white;
+}
+
+.btn:not(:disabled):not(.disabled) {
+    color: darkblue;
+}
