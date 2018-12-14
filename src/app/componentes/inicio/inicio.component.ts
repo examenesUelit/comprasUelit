@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class InicioComponent implements OnInit {
   isLogin: boolean = false;
-  uidUsuario: string = '';
+  usuarioId: string = '';
 
   constructor(
     private authService: AuthService,
@@ -25,7 +25,7 @@ export class InicioComponent implements OnInit {
       .subscribe(respuesta => {
         if (respuesta) {
           this.isLogin = true;
-          this.uidUsuario = this.authService.authFirebase.auth.currentUser.uid;
+          this.usuarioId = this.authService.authFirebase.auth.currentUser.uid;
         } else {
           this.isLogin = false;
         }

@@ -17,7 +17,7 @@
 <div class="container" *ngIf="isLogin">
   <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
-      <a class="btn btn-lg btn-outline-info btn-block" routerLink="/productos/producto/{{ idUsuario }}">Mis Productos
+      <a class="btn btn-lg btn-outline-info btn-block" routerLink="/productos/producto/{{ usuarioId }}">Mis Productos
         Agregados</a>
     </div>
   </div>
@@ -38,7 +38,7 @@
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
       <table class="table table-hover">
         <tbody>
-          <tr class="table-light">
+          <tr class="table-light btn" routerLink="/categorias/categoria/Hogar">
             <th scope="row">
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
@@ -49,13 +49,13 @@
             <td>
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a routerLink="/categorias/categoria/categoria" class="btn btn-warning"><i
+                  <span class="icono text-right"><a class="btn btn-warning"><i
                         class="fa fa-home"></i></a></span>
                 </div>
               </div>
             </td>
           </tr>
-          <tr class="table-light">
+          <tr class="table-light btn" routerLink="/categorias/categoria/Automoviles">
             <th scope="row">
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
@@ -66,13 +66,13 @@
             <td>
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a routerLink="/categorias/categoria/categoria" class="btn btn-warning"><i
+                  <span class="icono text-right"><a class="btn btn-warning"><i
                         class="fa fa-car"></i></a></span>
                 </div>
               </div>
             </td>
           </tr>
-          <tr class="table-light">
+          <tr class="table-light btn" routerLink="/categorias/categoria/Mascotas">
             <th scope="row">
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
@@ -83,13 +83,13 @@
             <td>
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a routerLink="/categorias/categoria/categoria" class="btn btn-warning"><i
+                  <span class="icono text-right"><a class="btn btn-warning"><i
                         class="fa fa-paw"></i></a></span>
                 </div>
               </div>
             </td>
           </tr>
-          <tr class="table-light">
+          <tr class="table-light btn" routerLink="/categorias/categoria/Medicina">
             <th scope="row">
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
@@ -100,13 +100,13 @@
             <td>
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a routerLink="/categorias/categoria/categoria" class="btn btn-warning"><i
+                  <span class="icono text-right"><a class="btn btn-warning"><i
                         class="fa fa-heartbeat"></i></a></span>
                 </div>
               </div>
             </td>
           </tr>
-          <tr class="table-light">
+          <tr class="table-light btn" routerLink="/categorias/categoria/Deportes">
             <th scope="row">
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
@@ -117,7 +117,7 @@
             <td>
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a routerLink="/categorias/categoria/categoria" class="btn btn-warning"><i
+                  <span class="icono text-right"><a class="btn btn-warning"><i
                         class="fa fa-futbol"></i></a></span>
                 </div>
               </div>

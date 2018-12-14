@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AgregarprecioComponent implements OnInit {
   producto: ProductoDetalle = {
-    id: '',
+    idProducto: '',
     precio: null,
     tienda: ''
   }
@@ -34,7 +34,7 @@ export class AgregarprecioComponent implements OnInit {
   //AGREGAR CAMBIO DE PRECIO
   onCambiarPrecio({ value }: { value: ProductoDetalle }) {
     this.producto = value;
-    this.producto.id = this.authService.authFirebase.auth.currentUser.uid;
+    this.producto.idProducto = this.authService.authFirebase.auth.currentUser.uid;
     this.productoService.agregarPrecioProducto(this.idProducto, this.uidUsuario, this.producto);
   }
 

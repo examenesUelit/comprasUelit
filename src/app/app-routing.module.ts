@@ -18,9 +18,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'precio/agregar/:id', component: AgregarprecioComponent, canActivate: [AuthGuard] },
   { path: 'categorias/categoria/:id', component: CategoriaComponent },
-  { path: 'productos', component: ProductosComponent },
-  { path: 'productos/crear', component: CrearproductoComponent, canActivate: [AuthGuard] },
-  { path: 'productos/producto/:id', component: ProductoComponent, canActivate: [AuthGuard] },
+  { path: 'productos/:id', component: ProductosComponent },
+  { path: 'productos/crear/nuevo', component: CrearproductoComponent, canActivate: [AuthGuard] },
+  { path: 'productos/producto/:id', component: ProductoComponent},
   { path: '**', component: PaginaNoEncontradaComponent }
 ];
 

@@ -10,13 +10,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class CrearproductoComponent implements OnInit {
   producto: ProductoInterface = {
-    id: '',
+    idProducto: '',
     nombre: '',
     categoria: '',
     precio: null,
     tienda: ''
   }
-  constructor(private productoService: ProductoService, private authService: AuthService) { }
+  constructor(
+    private productoService: ProductoService,
+    private authService: AuthService
+    ) { }
 
   ngOnInit() {
   }
@@ -24,7 +27,7 @@ export class CrearproductoComponent implements OnInit {
   //CREAR PRODUCTOS
   onCrearProducto({ value }: { value: ProductoInterface }) {
     this.producto = value;
-    this.producto.id = this.authService.authFirebase.auth.currentUser.uid;
+    this.producto.idProducto = this.authService.authFirebase.auth.currentUser.uid;
     this.productoService.crearProducto(this.producto);
   }
 }
