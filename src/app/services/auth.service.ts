@@ -8,6 +8,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +18,25 @@ export class AuthService {
   usuarioDoc: AngularFirestoreDocument<UserInterface>;
   usuarios: Observable<UserInterface[]>;
   usuario: Observable<UserInterface>;
-  constructor(public authFirebase: AngularFireAuth) {
+  constructor(
+    public authFirebase: AngularFireAuth,
+    private router: Router
+  ) {
   }
 
   //INICIAR SESIÓN CON GOOGLE
   loginGoogle() {
-    return this.authFirebase.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    return this.authFirebase.auth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    )
       .catch(error => console.error(error))
   }
 
   //INICIAR SESIÓN CON FACEBOOK
   loginFacebook() {
-    return this.authFirebase.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    return this.authFirebase.auth.signInWithPopup(
+      new firebase.auth.FacebookAuthProvider()
+    )
       .catch(error => console.error(error))
   }
 

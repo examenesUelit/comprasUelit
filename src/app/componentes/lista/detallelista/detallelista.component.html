@@ -1,0 +1,81 @@
+<!--LISTA-->
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <span class="btn-lg btn-success btn-block text-center">{{ lista.nombre }}</span>
+    </div>
+  </div>
+</div>
+
+<!--PRODUCTOS DE LA LISTA-->
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <h3>Nombre</h3>
+            </th>
+            <th>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Cantidad de Productos</h3>
+                </div>
+              </div>
+            </th>
+            <th *ngIf='miLista'>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Opciones</h3>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let producto of producto">
+          <tr>
+            <td>
+              <div class="mt-2">
+                <h5>{{ producto.nombre }}</h5>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <div class="mt-2">
+                    <h5>{{ producto.cantidad }}</h5>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td *ngIf='miLista'>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <div class="iconos">
+                    <a class="btn btn-danger text-center" (click)="eliminarProducto(producto.firebaseId)"><i class="far fa-trash-alt"></i></a>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--LISTA SIN PRODUCTOS-->
+<div *ngIf="producto.length == 0" class="container">
+  <div class="row justify-content-around">
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action flex-column align-items-start active">
+        <h1 class="text-center" style="color: white">Lista Vacia</h1>
+      </a>
+      <a class="list-group-item list-group-item-action flex-column align-items-start">
+        <h5 class="mb-1">La lista no tiene ningun producto agregado, para agregar un producto seleccione esta lista
+          como activa y agregue productos.</h5>
+      </a>
+    </div>
+  </div>
+</div>

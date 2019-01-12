@@ -1,37 +1,146 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" routerLink="/"><i class="fas fa-home"></i>&nbsp;</a>
+    <a class="navbar-brand btn" data-toggle="modal" data-target="#modal">
+        <i class="fas fa-search"></i>&nbsp;Búscar&nbsp;</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" *ngIf="isLogin">
-                <a class="nav-link" routerLink="/productos/crear/nuevo"><i class="fas fa-plus-circle"></i>&nbsp;Crear
-                    Producto</a>
+            <li class="dropdown nav-item">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <i class="far fa-list-alt"></i>&nbsp;Listas
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <div *ngIf="isLogin" data-toggle="collapse dropdown" data-target="#navbarColor01">
+                        <p *ngIf="existeLista" class="dropdown-item nav-link btn" routerLink="/listas/detalle/{{ idListaActiva }}">&nbsp;
+                            <i class="fas fa-clipboard-check">
+                                &nbsp;Lista Activa - "{{ nombreLista }}" -
+                            </i>
+                        </p>
+                        <p *ngIf="!existeLista" class="dropdown-item nav-link">&nbsp;
+                            <i class="far fa-times-circle">
+                                &nbsp;No hay una lista activa
+                            </i>
+                        </p>
+                    </div>
+                    <li *ngIf="isLogin" class="nav-item">
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li *ngIf="isLogin" class="nav-item">
+                        <div data-toggle="collapse dropdown" data-target="#navbarColor01">
+                            <a class="dropdown-item btn nav-link" routerLink="/listas/{{ usuarioId }}">&nbsp;<i class="far fa-list-alt"></i>&nbsp;Ver
+                                Mis
+                                Listas</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div data-toggle="collapse dropdown" data-target="#navbarColor01">
+                            <a class="dropdown-item btn nav-link" routerLink="/listas">&nbsp;<i class="far fa-list-alt"></i>&nbsp;Ver
+                                Listas</a>
+                        </div>
+                    </li>
+                    <li *ngIf="isLogin" class="nav-item">
+                        <div data-toggle="collapse dropdown" data-target="#navbarColor01">
+                            <a class="dropdown-item btn nav-link" routerLink="/listas/agregar/nueva">&nbsp;<i class="far fa-plus-square"></i>&nbsp;Agregar
+                                Lista</a>
+                        </div>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item" *ngIf="isLogin">
-                <a class="nav-link" routerLink="/productos/producto/{{ usuarioId }}"><i class="fab fa-product-hunt"></i>&nbsp;Mis
-                    productos</a>
+            <li class="dropdown nav-item">
+                <a *ngIf="isLogin" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <i class="fab fa-product-hunt"></i>&nbsp;Productos
+                </a>
+                <ul class="dropdown-menu bg-primary">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/productos/producto/{{ usuarioId }}">
+                            <div data-toggle="collapse dropdown" data-target="#navbarColor01">
+                                <i class="fab fa-product-hunt"></i>&nbsp;Mis
+                                productos
+                            </div>
+                        </a>
+                    </li>
+                    <li *ngIf="isLogin" class="nav-item">
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/productos/crear/nuevo">
+                            <div data-toggle="collapse dropdown" data-target="#navbarColor01">
+                                <i class="fas fa-plus-circle"></i>&nbsp;Crear
+                                Producto
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="acerca"><i class="fas fa-info"></i>&nbsp;Acerca de</a>
+                <a class="nav-link" routerLink="acerca">
+                    <div data-toggle="collapse" data-target="#navbarColor01">
+                        <i class="fas fa-info"></i>&nbsp;Acerca de
+                    </div>
+                </a>
             </li>
         </ul>
         <div class="form-inline my-2 my-lg-0">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto text-center">
                 <li class="nav-item" *ngIf="!isLogin">
-                    <a class="nav-link" routerLink="login"><i class="fas fa-user-circle"></i>&nbsp;Iniciar Sesión</a>
+                    <div data-toggle="collapse" data-target="#navbarColor01">
+                        <a class="nav-link" routerLink="login"><i class="fas fa-user-circle"></i>&nbsp;Iniciar Sesión</a>
+                    </div>
                 </li>
                 <li class="nav-item" *ngIf="isLogin">
-                    <img src="{{ fotoPerfil }}" class="rounded-circle foto" alt="Foto de Perfil">
-                </li>
-                <li class="nav-item" *ngIf="isLogin">
-                    <a class="nav-link btn" (click)="logOut()">{{ nombreUsuario }}&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i>&nbsp;</a>
+                    <a class="btn nav-link" (click)="logOut()">
+                        <div data-toggle="collapse" data-target="#navbarColor01">
+                            <img src="{{ fotoPerfil }}" class="rounded-circle foto" alt="Foto de Perfil"><span class="align-middle">&nbsp;&nbsp;&nbsp;&nbsp;{{
+                                nombreUsuario }}&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></span>
+                        </div>
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 <router-outlet></router-outlet>
+
+<!--MODAL DE BÚSQUEDA-->
+<div id="modal" class="modal">
+    <div class="modal-dialog modal-md modal-center">
+        <div class="modal-content">
+            <form class="container">
+                <div class="modal-header">
+                    <h5 class="modal-title">Búsqueda personalizada</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="busqueda" name="busqueda" class="form-control" #busqueda type="text" placeholder="¿Qué desea búscar?">
+                    <br>
+                    <h5>Categorias</h5>
+                    <!--TODAS LAS CATEGORIAS-->
+                    <select class="selectpicker btn btn-primary" #selectElem (change)="seleccionCategoria(selectElem.value)">
+                        <option>
+                            <a class="dropdown-item btn">Todas</a>
+                        </option>
+                        <option *ngFor="let categoria of categorias">
+                            <a class="dropdown-item btn">{{ categoria }}</a>
+                        </option>
+                    </select>
+                    <br> <br>
+                    <div class="container" *ngFor="let categoria of opciones">
+                        <!--CATEGORIAS SELECCIONADAS-->
+                        <span class="btn badge badge-pill badge-info"><a (click)="borrarCategoria(categoria)">{{categoria}}</a></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="sub" (click)="buscar(busqueda)" class="btn btn-primary btn-block" data-dismiss="modal"><i
+                            class="fas fa-search"></i>&nbsp;&nbsp;Búscar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

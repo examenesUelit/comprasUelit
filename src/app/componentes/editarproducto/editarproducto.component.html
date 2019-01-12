@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <form #formGuardar="ngForm" (ngSubmit)=onEditarProducto(formGuardar)>
+        <h3>Editar producto</h3>
+        <h5 *ngIf="urlActual!=''">Imagen actual del producto</h5>
+        <div *ngIf="urlActual!=''" class="card-body card">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+            <img *ngIf="urlActual=='LOCAL'" id="imagenProducto" [src]="urlActual" alt="{{ producto.nombre }}" (error)="errorUrl()">
+            <img *ngIf="urlActual!='LOCAL'" id="imagenProducto" [src]="urlActual" alt="{{ producto.nombre }}" (error)="errorUrl()">
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <button *ngIf="!cambiarImagen" type="button" class="btn btn-lg btn-block btn-outline-warning" (click)="cambiarImagenProducto(true)">
+            <i class="fas fa-edit"></i>&nbsp;Cambiar imagen
+          </button>
+          <button *ngIf="cambiarImagen" type="button" class="btn btn-lg btn-block btn-outline-danger" (click)="cambiarImagenProducto(false)">
+            <i class="fas fa-times-circle"></i>&nbsp;No cambiar la imagen
+          </button>
+        </div>
+        <div class="form-group">
+          <h5>Nombre</h5>
+          <input type="text" id="nombre" name="nombre" [(ngModel)]="producto.nombre" class="form-control" placeholder="Nombre"
+            required />
+        </div>
+        <div class="form-group">
+          <h5>Categoria</h5>
+          <select type="text" id="categoria" name="categoria" [(ngModel)]="producto.categoria" class="form-control"
+            placeholder="Categoria" required>
+            <option *ngFor="let categoria of categorias">{{ categoria }}</option>
+          </select>
+        </div>
+        <div *ngIf="cambiarImagen" class="form-group">
+          <h5>Selecciona una opción.</h5>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="" (change)="urlImagen()">
+            <label class="custom-control-label" for="customRadio1">Mediante URL.</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" (change)="urlImagen()">
+            <label class="custom-control-label" for="customRadio2">Mediante archivo local.</label>
+          </div>
+        </div>
+        <br *ngIf="cambiarImagen">
+        <div *ngIf="cambiarImagen">
+          <div *ngIf="porURL" class="form-group">
+            <h5>URL de la imagen</h5>
+            <div class="card border-success mb-3" style="max-width: 20rem;">
+              <div class="card-header">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">URL</span>
+                    </div>
+                    <input type="url" id="imagenUrl" name="imagenUrl" [(ngModel)]="producto.imagenUrl" minlength="1"
+                      class="form-control" placeholder="URL de la imagen" (keyup)="onChangeUrl($event)" />
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="url!=''" class="card-body">
+                <button type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true" (click)="borrarImagenUrl()">&times;</span>
+                </button>
+                <img id="imagen" [src]="url" alt="Vista previa" (error)="errorUrl()">
+              </div>
+            </div>
+          </div>
+          <h5 *ngIf="porArchivo">Subir desde archivo la imagen</h5>
+          <div *ngIf="porArchivo" class="card border-success mb-3" style="max-width: 20rem;">
+            <div class="card-header">
+              <div class="form-group">
+                <input type="file" id="InputFile" aria-describedby="fileHelp" accept="image/*" (change)="onSelectFile($event)">
+                <small id="fileHelp" class="form-text text-muted">Sube una imagen que no exceda de 5 MB.</small>
+              </div>
+            </div>
+            <div *ngIf="url!=''" class="card-body">
+              <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true" (click)="borrarImagen()">&times;</span>
+              </button>
+              <img id="imagen" [src]="url" alt="Vista previa" (error)="errorArchivo()">
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <button type="submit" class="btn btn-lg btn-block btn-outline-success"><i class="fas fa-save"></i>&nbsp;Actualizar
+            producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

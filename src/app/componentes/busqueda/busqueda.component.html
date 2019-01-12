@@ -1,0 +1,133 @@
+<!--CATEGORIAS-->
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <span class="btn-lg btn-primary btn-block text-center">Resultados para</span>
+    </div>
+    <div *ngIf="!todo" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <span class="btn-lg btn-success btn-block text-center">"{{ busqueda.buscar }}"</span>
+    </div>
+    <div *ngIf="todo" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <span class="btn-lg btn-success btn-block text-center">"Buscar todo"</span>
+    </div>
+  </div>
+
+  <!--ALERTA DE RESULTADOS-->
+  <div *ngIf="!sinResultados" class="alert alert-dismissible alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Resultados de la búsqueda!</strong>
+    <br>
+    No se encontraron resultados para " <strong class="busqueda"><u>{{ busqueda.buscar }}</u></strong> ".
+    <br>
+    Intente nuevamente con otra búsqueda.
+  </div>
+
+  <!--TODOS LOS RESULTADOS DE LA BÚSQUEDA-->
+  <div class="container producto">
+    <div class="row">
+      <div *ngFor="let producto of producto" class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card-body d-flex justify-content-around card">
+          <div class="d-flex flex-row-reverse">
+            <h6>Categoria: <span class="badge badge-pill badge-warning">{{ producto.categoria }}</span></h6>
+          </div>
+          <div class="container">
+            <img *ngIf="producto.imagenUrl=='LOCAL'" id="imagen" style="height: auto; width: 100%; display: block;" src="../../../assets/img/compras.png"
+              alt="{{ producto.nombre }}" (error)="errorImagen()">
+            <img *ngIf="producto.imagenUrl!='LOCAL'" id="imagen" style="height: auto; width: 100%; display: block;" src="{{producto.imagenUrl}}"
+              alt="{{ producto.nombre }}" (error)="errorImagen()">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                <span class="btn-lg btn-block text-center">{{ producto.nombre }}</span>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                <span *ngIf="producto.detalle.length==0" class="btn-lg btn-success btn-block text-center">$ {{
+                  producto.precio }}</span>
+                <span *ngIf="producto.detalle.length>0" class="btn-lg btn-success btn-block text-center">$ {{
+                  producto.detalle[0].precio }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                <a *ngIf="producto.detalle.length == 2" class="btn btn-lg btn-outline-info btn-block" routerLink="/productos/{{ producto.firebaseId }}">Ver
+                  {{ producto.detalle.length -1}} Precio Más</a>
+                <a *ngIf="producto.detalle.length > 2" class="btn btn-lg btn-outline-info btn-block" routerLink="/productos/{{ producto.firebaseId }}">Ver
+                  {{ producto.detalle.length -1}} Precios Más</a>
+                <a *ngIf="producto.detalle.length == 1 || producto.detalle.length == 0" class="btn btn-lg btn-outline-info btn-block"
+                  routerLink="/productos/{{ producto.firebaseId }}">Ver
+                  Precio</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-primary text-center">
+          <div style="padding-bottom: 10px !important;padding-top: 10px !important;" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+            <span class="btn btn-outline-primary btn-block agregar-lista" (click)="obtenerProductoDetalle(producto.firebaseId)"
+              data-toggle="modal" data-target="#modalDetalle">
+              <i class="fas fa-plus-circle"></i>&nbsp;Agregar a la lista
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL DE DETALLES-->
+  <div id="modalDetalle" class="modal">
+    <div class="modal-dialog modal-md modal-center">
+      <div class="modal-content">
+        <form class="container">
+          <div class="modal-header">
+            <h5 class="modal-title">Detalles del producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body d-flex justify-content-around card">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                  <img id="imagen" [src]="detalleProducto.imagenUrl" alt="{{ detalleProducto.nombre }}" (error)="errorImagen()">
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                  <span class="btn-lg btn-block text-center">{{ detalleProducto.nombre }}</span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                  <div class="row text-center">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-right">
+                      <span class="btn btn-outline-danger" (click)="disminuirCantidad(cantidad)">
+                        <i class="fas fa-minus-circle"></i>
+                      </span>
+                    </div>
+                    <span class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                      <input type="number" id="cantidad" name="cantidad" min="1" class="form-control text-center"
+                        placeholder="Cantidad" value="{{ cantidad }}" required />
+                    </span>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-left">
+                      <span class="btn btn-outline-success" (click)="aumentarCantidad(cantidad)">
+                        <i class="fas fa-plus-circle"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <span *ngIf="detalleProducto.detalle.length==0" class="btn-lg btn-success btn-block text-center">
+                  $ {{ detalleProducto.precio }}
+                </span>
+                <span *ngIf="detalleProducto.detalle.length>0" class="btn-lg btn-success btn-block text-center">
+                  $ {{ detalleProducto.detalle[0].precio }}</span>
+              </div>
+            </div>
+            <div class="card-footer text-center">
+              <br>
+              <div class="agregar-boton">
+                <span class="btn btn-outline-primary btn-block btn-lg agregar-lista-detalle" (click)="agregarProducto(detalleProducto.firebaseId)">
+                  <i class="fas fa-plus-circle"></i>&nbsp;Agregar a la lista
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

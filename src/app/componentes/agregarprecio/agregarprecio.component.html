@@ -3,7 +3,7 @@
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
       <form #formGuardar="ngForm" (ngSubmit)=onCambiarPrecio(formGuardar)>
         <h3>Agregar Precio a</h3>
-        <h4>{{ nombre }}</h4>
+        <h4>{{ producto.nombre }}</h4>
         <br>
         <div class="form-group">
           <h5>Precio</h5>
@@ -24,7 +24,7 @@
           <h5>Tienda</h5>
           <select type="text" id="tienda" name="tienda" [(ngModel)]="producto.tienda" class="form-control" placeholder="Tienda"
             required>
-            <option>Aurrera</option>
+            <option selected>Aurrera</option>
             <option>Soriana</option>
             <option>La Comer</option>
             <option>Walmart</option>

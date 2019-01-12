@@ -1,5 +1,7 @@
 export interface ProductoDetalle {
     idProducto?: string;
-    precio: number;
-    tienda: string;
+    idUsuario?: string;
+    precio?: number;
+    tienda?: string;
+    firebaseId?: string;
 }

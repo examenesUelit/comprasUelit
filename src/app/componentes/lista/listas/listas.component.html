@@ -1,0 +1,140 @@
+<!--LISTA-->
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <table class="table">
+        <thead>
+          <tr>
+            <!-- <th *ngIf="isLogin">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Estado</h3>
+                </div>
+              </div>
+            </th> -->
+            <th>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Nombre del usuario</h3>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Nombre de la lista</h3>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Productos</h3>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Fecha</h3>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <h3>Opciones</h3>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let lista of listas">
+          <tr *ngIf="lista.tipo=='Pública'" class="table-default">
+            <!-- <td *ngIf="isLogin">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <span *ngIf="lista.estado=='Activa'" style="font-size: 30px; color: green;">
+                    <i class="fas fa-clipboard-check"></i>
+                  </span>
+                </div>
+              </div>
+            </td> -->
+            <td>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <div class="mt-2">
+                    <h5>{{ lista.nombreUsuario }}</h5>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <div class="mt-2">
+                    <h5>{{ lista.nombre }}</h5>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <div class="mt-2">
+                    <h5>{{ lista.productos.length }}</h5>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <div class="mt-2">
+                    <h5>{{ lista.fecha | date: 'dd/MM/yyyy' }}</h5>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
+                  <div class="iconos">
+                    <!-- <a *ngIf="isLogin" class="btn btn-warning text-center" routerLink="/listas/detalle/{{ lista.firebaseId }}"><i
+                        class="fas fa-edit"></i></a>
+                    &nbsp; -->
+                    <a class="btn btn-warning text-center" routerLink="/listas/detalle/{{ lista.firebaseId }}"><i class="far fa-list-alt"></i></a>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--SIN LISTAS-->
+<div *ngIf="listas.length == 0" class="container">
+  <div class="row justify-content-around">
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action flex-column align-items-start active">
+        <h1 class="text-center" style="color: white">Sin listas</h1>
+      </a>
+      <a class="list-group-item list-group-item-action flex-column align-items-start">
+        <h5 class="mb-1">No se encontraron listas, agregue una lista primero para visualizarla aquí.</h5>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!--AGREGAR NUEVA LISTA-->
+<div class="container fixed-bottom">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <a class="btn btn-lg btn-info btn-block" routerLink="/listas/agregar/nueva">Añadir
+        Nueva Lista</a>
+    </div>
+  </div>
+</div>

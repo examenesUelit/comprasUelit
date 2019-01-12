@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -18,7 +22,8 @@ export class LoginComponent implements OnInit {
     this.authService.loginGoogle()
       .then(auth => {
         if (auth) {
-          alert('Sesión iniciada correctamente desde Google')
+          this.router.navigate(['/']);
+          alert('Sesión iniciada correctamente desde Google');
         }
       }).catch(error => {
         alert(`Ha ocurrido un error al iniciar sesión ${error}`)
@@ -30,7 +35,8 @@ export class LoginComponent implements OnInit {
     this.authService.loginFacebook()
       .then(auth => {
         if (auth) {
-          alert('Sesión iniciada correctamente desde Facebook')
+          this.router.navigate(['/']);
+          alert('Sesión iniciada correctamente desde Facebook');
         }
       }).catch(error => {
         alert(`Ha ocurrido un error al iniciar sesión ${error}`)

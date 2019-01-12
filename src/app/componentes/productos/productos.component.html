@@ -2,38 +2,41 @@
 <div class="container">
   <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
-      <span class="btn-lg btn-primary btn-block text-center">{{ producto.nombre }}</span>
+      <span class="btn-lg btn-primary btn-block text-center">{{ productoActual }}</span>
+    </div>
+  </div>
+</div>
+<!-- PRODUCTO MÁS BARATO -->
+<div class="container">
+  <div class="row">
+    <div *ngFor="let producto of detalleBarato" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+      <span class="btn-lg btn-success btn-block text-center"> {{ producto.tienda }} &nbsp; $ {{ producto.precio }}</span>
+      <div *ngIf="producto.idUsuario==uidUsuario"><a class="btn btn-warning text-center btn-lg" routerLink="/precio/editar/{{ idProducto }}/{{ producto.firebaseId }}"><i
+            class="fas fa-edit"></i></a></div>
     </div>
   </div>
 </div>
 
-<!--PRODUCTO MÁS BARATO-->
-<div class="container">
-  <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
-      <span class="btn-lg btn-success btn-block text-center"> {{ producto.tienda }} &nbsp; $ {{ producto.precio }}</span>
-    </div>
-  </div>
-</div>
-<!-- {{ producto.idProducto }}  -- {{ idProducto }} **** {{ producto | json }}  ** -->
 <!--TABLA DE LOS PRODUCTOS RESTANTES-->
-<div class="container producto">
+<div *ngIf="existeDetalle" class="container producto">
   <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-      <div class=" card-body mx-auto d-flex justify-content-around">
+      <div class="card-body mx-auto d-flex justify-content-around">
         <table class="table table-hover">
           <tbody>
-            <tr class="table-light" *ngFor="let detalles of detalle">
-              <td scope="row">
+            <tr *ngFor="let detalles of detalle" class="table-light">
+              <td *ngIf="detalles.firebaseId != detalleBarato[0].firebaseId" scope="row">
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
                     <span>{{ detalles.tienda }}</span>
                   </div>
                 </div>
               </td>
-              <td>
+              <td *ngIf="detalles.firebaseId != detalleBarato[0].firebaseId">
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
+                    <div *ngIf="detalles.idUsuario==uidUsuario"><a class="btn btn-warning text-center" routerLink="/precio/editar/{{ idProducto }}/{{detalles.firebaseId}}"><i
+                          class="fas fa-edit"></i></a></div>
                     <span class="btn btn-success text-center disabled">$ {{ detalles.precio }}</span>
                   </div>
                 </div>
@@ -46,11 +49,12 @@
   </div>
 </div>
 
-<!--AGREGAR NUEVOS PRODUCTOS-->
+<!--AGREGAR NUEVOS PRECIOS-->
 <div class="container fixed-bottom">
   <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
-      <a class="btn btn-lg btn-outline-info btn-block" routerLink="/precio/agregar/{{ producto.idProducto }}">Añadir Precio</a>
+      <a class="btn btn-lg btn-info btn-block" routerLink="/precio/agregar/{{ idProducto }}">Añadir
+        Precio</a>
     </div>
   </div>
 </div>

@@ -1,5 +1,8 @@
 .foto {
-    margin-top: 5px;
     width: 30px;
     display: inline-block;
+}
+
+a:not([href]):not([tabindex]) {
+    color: white;
 }

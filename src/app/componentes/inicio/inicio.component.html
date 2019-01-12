@@ -2,13 +2,12 @@
 <header class="masthead bg-primary text-white text-center">
   <div class="container">
     <br>
-    <img class="img-fluid mb-5 d-block mx-auto" style="width: 200px;" src="../../../assets/img/compras.png"
-      alt="Compras">
+    <img class="img-fluid mb-5 d-block mx-auto" style="width: 200px;" src="../../../assets/img/compras.png" alt="Compras">
     <h1 class="text-uppercase mb-0">¡¡Vamos a comprar!!</h1>
     <hr class="star-light">
     <h2 class="font-weight-light mb-0">Compra lo mejor al mejor precio. </h2>
     <br>
-    <h3 class="font-weight-light mb-0"> Compara los precios de diversos articulo.</h3>
+    <h3 class="font-weight-light mb-0"> Compara los precios de diversos articulos.</h3>
     <br>
   </div>
 </header>
@@ -35,96 +34,25 @@
 <!--TABLA DE CATEGORIAS-->
 <div class="container">
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
-      <table class="table table-hover">
-        <tbody>
-          <tr class="table-light btn" routerLink="/categorias/categoria/Hogar">
-            <th scope="row">
-              <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="card-body mx-auto d-flex justify-content-around">
+        <table class="table table-hover">
+          <tbody>
+            <tr *ngFor="let categoria of categorias" class="table-light" routerLink="/categorias/categoria/{{ categoria.nombre }}">
+              <td scope="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
-                  <span>Hogar</span>
+                  <span>{{ categoria.nombre }}</span>
                 </div>
-              </div>
-            </th>
-            <td>
-              <div class="row">
+              </td>
+              <td class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a class="btn btn-warning"><i
-                        class="fa fa-home"></i></a></span>
+                  <a class="icono btn btn-warning text-center"><i class="{{ categoria.icono }}"></i></a>
                 </div>
-              </div>
-            </td>
-          </tr>
-          <tr class="table-light btn" routerLink="/categorias/categoria/Automoviles">
-            <th scope="row">
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
-                  <span>Automoviles</span>
-                </div>
-              </div>
-            </th>
-            <td>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a class="btn btn-warning"><i
-                        class="fa fa-car"></i></a></span>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr class="table-light btn" routerLink="/categorias/categoria/Mascotas">
-            <th scope="row">
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
-                  <span>Mascotas</span>
-                </div>
-              </div>
-            </th>
-            <td>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a class="btn btn-warning"><i
-                        class="fa fa-paw"></i></a></span>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr class="table-light btn" routerLink="/categorias/categoria/Medicina">
-            <th scope="row">
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
-                  <span>Medicina</span>
-                </div>
-              </div>
-            </th>
-            <td>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a class="btn btn-warning"><i
-                        class="fa fa-heartbeat"></i></a></span>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr class="table-light btn" routerLink="/categorias/categoria/Deportes">
-            <th scope="row">
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex left-content-around">
-                  <span>Deportes</span>
-                </div>
-              </div>
-            </th>
-            <td>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex flex-row-reverse">
-                  <span class="icono text-right"><a class="btn btn-warning"><i
-                        class="fa fa-futbol"></i></a></span>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

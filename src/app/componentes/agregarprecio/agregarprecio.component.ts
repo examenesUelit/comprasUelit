@@ -13,17 +13,17 @@ export class AgregarprecioComponent implements OnInit {
   producto: ProductoDetalle = {
     idProducto: '',
     precio: null,
-    tienda: ''
+    tienda: 'Aurrera'
   }
   idProducto: string;
   nombre: string = '';
   uidUsuario: string = '';
 
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AuthService,
     private productoService: ProductoService,
-    private router: Router,
     private route: ActivatedRoute
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.idProducto = this.route.snapshot.params['id'];
@@ -33,9 +33,16 @@ export class AgregarprecioComponent implements OnInit {
 
   //AGREGAR CAMBIO DE PRECIO
   onCambiarPrecio({ value }: { value: ProductoDetalle }) {
-    this.producto = value;
-    this.producto.idProducto = this.authService.authFirebase.auth.currentUser.uid;
-    this.productoService.agregarPrecioProducto(this.idProducto, this.uidUsuario, this.producto);
+    if (value.precio == null || value.precio == 0) {
+      alert('Agregue un precio');
+    } else if (value.tienda == '') {
+      alert('Seleccione una tienda')
+    } else {
+      this.producto = value;
+      this.producto.idUsuario = this.authService.authFirebase.auth.currentUser.uid;
+      this.producto.idProducto = this.idProducto;
+      this.productoService.agregarPrecioProducto(this.idProducto, this.producto, true);
+    }
   }
 
   //OBTENER DETALLES DEL PRODUCTO

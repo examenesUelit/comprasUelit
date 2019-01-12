@@ -1,0 +1,11 @@
+ h2, h3, h4, h6, .h1, .h2, .h3, .h4, .h6 {
+    color: #04519b;
+}
+
+h3 {
+    font-size: 1.4rem;
+}
+
+.iconos {
+    color: white;
+}

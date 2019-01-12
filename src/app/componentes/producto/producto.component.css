@@ -1,7 +1,19 @@
-a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus{
-    color: white;
+.card-footer {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
 }
 
-.btn:not(:disabled):not(.disabled) {
-    color: darkblue;
+.agregar-lista {
+    font-size: 20px;
+    color: white;
+    padding-bottom: 10 !important;
+    padding-top: 10 !important;
+}
+
+.card {
+    margin-top: 20px;
+}
+
+.espacio {
+    margin-bottom: 60px;
 }
