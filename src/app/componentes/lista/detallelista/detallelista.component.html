@@ -53,7 +53,13 @@
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mx-auto d-flex justify-content-around">
                   <div class="iconos">
-                    <a class="btn btn-danger text-center" (click)="eliminarProducto(producto.firebaseId)"><i class="far fa-trash-alt"></i></a>
+                    <a id="abrirModal" class="btn btn-warning text-center" (click)="obtenerProductoDetalle(producto.firebaseId)"
+                      data-toggle="modal" data-target="#modalDetalleProducto">
+                      <i class="fas fa-edit"></i>
+                    </a>&nbsp;
+                    <a class="btn btn-danger text-center" (click)="eliminarProducto(producto.firebaseId)">
+                      <i class="far fa-trash-alt"></i>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -65,8 +71,17 @@
   </div>
 </div>
 
+<!--CARGANDO LISTA DE PRODUCTOS-->
+<div *ngIf="!existeProductoLista" class="container">
+  <div class="row justify-content-around text-center">
+      <span class="btn-block btn-lg" style="font-size: 150px; color:#04519b;">
+        <i class="fas fa-spinner fa-pulse"></i>
+      </span>
+  </div>
+</div>
+
 <!--LISTA SIN PRODUCTOS-->
-<div *ngIf="producto.length == 0" class="container">
+<div *ngIf="existeProductoLista && producto.length == 0" class="container">
   <div class="row justify-content-around">
     <div class="list-group">
       <a class="list-group-item list-group-item-action flex-column align-items-start active">
@@ -76,6 +91,57 @@
         <h5 class="mb-1">La lista no tiene ningun producto agregado, para agregar un producto seleccione esta lista
           como activa y agregue productos.</h5>
       </a>
+    </div>
+  </div>
+</div>
+
+<!--MODAL DE CAMBIO DE CANTIDAD DEL PRODUCTO-->
+<div id="modalDetalleProducto" class="modal">
+  <div class="modal-dialog modal-md modal-center">
+    <div class="modal-content">
+      <form class="container">
+        <div class="modal-header">
+          <h3 class="modal-title">Detalles del producto</h3>
+          <button id="cerrarModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body d-flex justify-content-around card">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                <h5 class="btn-lg btn-block text-center">{{ nombreProducto }}</h5>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 card-body mx-auto d-flex justify-content-around">
+                <div class="row text-center">
+                  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-right">
+                    <span class="btn btn-outline-danger" (click)="disminuirCantidad(cantidadCambio)">
+                      <i class="fas fa-minus-circle"></i>
+                    </span>
+                  </div>
+                  <span class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <input type="number" id="cantidadCambio" name="cantidadCambio" #cantidadCambio min="1" class="form-control text-center"
+                      placeholder="Cantidad" value="{{ cantidad }}" required />
+                  </span>
+                  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-left">
+                    <span class="btn btn-outline-success" (click)="aumentarCantidad(cantidadCambio)">
+                      <i class="fas fa-plus-circle"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <br>
+            <div class="agregar-boton">
+              <span class="btn btn-outline-warning btn-block btn-lg agregar-lista-detalle" (click)="actualizarProducto(detalleProducto.idProducto, cantidadCambio)">
+                <i class="fas fa-edit"></i>&nbsp;Actualizar producto
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

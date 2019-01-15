@@ -24,6 +24,7 @@ export class UsuarioslistasComponent implements OnInit {
   isLogin: boolean = false;
   uidUsuario: string = '';
   existeLista: boolean = false;
+  existeProductoLista: boolean = false;
   total: number = 0;
 
   constructor(
@@ -33,7 +34,9 @@ export class UsuarioslistasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.obtenerListas();
+    setTimeout(() => {
+      this.obtenerListas();
+    }, 3000);
     this.listas = [];
   }
 
@@ -44,23 +47,26 @@ export class UsuarioslistasComponent implements OnInit {
     this.listaService.obtenerListasUsuario(this.uidUsuario)
       .subscribe(res => {
         this.listas = [];
-        if (this.total == 0) {
-          res.forEach(datos => {
-            if (datos) {
-              datos.productos = [];
-              this.listaService.obtenerProductosLista(datos.firebaseId)
-                .subscribe(res => {
-                  res.forEach(elementos => {
-                    if (elementos) {
-                      datos.productos.push(elementos.firebaseId);
-                    }
+        if (res) {
+          if (this.total == 0) {
+            res.forEach(datos => {
+              if (datos) {
+                datos.productos = [];
+                this.listaService.obtenerProductosLista(datos.firebaseId)
+                  .subscribe(res => {
+                    res.forEach(elementos => {
+                      if (elementos) {
+                        datos.productos.push(elementos.firebaseId);
+                      }
+                    });
                   });
-                });
-              this.listas.push(datos);
-              this.existeLista = true;
-            }
-          });
-          this.total + 1;
+                this.listas.push(datos);
+                this.existeLista = true;
+              }
+            });
+            this.total + 1;
+          }
+          this.existeProductoLista = true;
         }
       });
   }

@@ -66,6 +66,7 @@ export class AppComponent implements OnInit {
   obtenerCategorias() {
     this.categoriaService.obtenerTodasCategorias()
       .subscribe(datos => {
+        this.categorias = [];
         datos.map(categoria => {
           this.categorias.push(categoria.nombre);
         })

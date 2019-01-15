@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ListasComponent implements OnInit {
   listas: ListaInterface[];
   isLogin: boolean = false;
+  existeProductoLista: boolean = false;
 
   constructor(
     private listaService: ListaService,
@@ -19,7 +20,9 @@ export class ListasComponent implements OnInit {
 
   ngOnInit() {
     this.isLogIn();
-    this.obtenerListas();
+    setTimeout(() => {
+      this.obtenerListas();
+    }, 3000);
     this.listas = [];
   }
 
@@ -53,6 +56,7 @@ export class ListasComponent implements OnInit {
                 });
               });
           })
+          this.existeProductoLista = true;
         }
       });
   }

@@ -49,6 +49,7 @@ export class AgregarlistaComponent implements OnInit {
       this.lista = value
       this.lista.fecha = new Date().getTime();
       this.lista.disponibilidad = 'Activada';
+      this.lista.estado = 'Activa';
       this.lista.idUsuario = this.authService.authFirebase.auth.currentUser.uid;
       this.lista.nombreUsuario = this.authService.authFirebase.auth.currentUser.displayName;
       if (this.resultado == 0) {

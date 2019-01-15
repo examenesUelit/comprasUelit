@@ -34,6 +34,9 @@ export class ProductoComponent implements OnInit {
   detalle: ProductoDetalle[];
   IdCategoria: string = '';
   uidUsuario: string = '';
+  existeLista: boolean = false;
+  existeProductoLista: boolean = false;
+  cargandoProductoLista: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -45,7 +48,10 @@ export class ProductoComponent implements OnInit {
     this.IdCategoria = this.route.snapshot.params['id'];
     this.uidUsuario = this.authService.authFirebase.auth.currentUser.uid;
     this.producto = [];
-    this.obtenerProducto();
+    this.productoLista = [];
+    setTimeout(() => {
+      this.obtenerProducto();
+    }, 3000);
   }
 
   //OBTENER MIS PRODUCTOS
@@ -54,32 +60,39 @@ export class ProductoComponent implements OnInit {
     this.productosService.obtenerTodosProductos()
       .subscribe(datos => {
         this.productoLista = [];
-        datos.forEach(elementos => {
-          if (elementos.idUsuario == this.uidUsuario) {
-            this.productosService.obtenerProductoDetalle(elementos.firebaseId)
-              .subscribe(detalles => {
-                this.detalle = [];
-                detalles.forEach(detalleElemento => {
-                  this.detallePrecio = detalleElemento
-                  this.detalle.push(this.detallePrecio)
+        this.cargandoProductoLista = false;
+        if (datos) {
+          datos.forEach(elementos => {
+            if (elementos.idUsuario == this.uidUsuario) {
+              this.productosService.obtenerProductoDetalle(elementos.firebaseId)
+                .subscribe(detalles => {
+                  this.detalle = [];
+                  detalles.forEach(detalleElemento => {
+                    this.detallePrecio = detalleElemento
+                    this.detalle.push(this.detallePrecio)
+                  });
+                  this.productosDetalles = {
+                    idProducto: elementos.idProducto,
+                    idUsuario: elementos.idUsuario,
+                    nombre: elementos.nombre,
+                    categoria: elementos.categoria,
+                    imagenUrl: elementos.imagenUrl,
+                    precio: elementos.precio,
+                    tienda: elementos.tienda,
+                    firebaseId: elementos.firebaseId,
+                    detalle: this.detalle
+                  }
+                  this.productoLista.push(this.productosDetalles);
+                  this.obtenerImagenProductos();
                 });
-                this.productosDetalles = {
-                  idProducto: elementos.idProducto,
-                  idUsuario: elementos.idUsuario,
-                  nombre: elementos.nombre,
-                  categoria: elementos.categoria,
-                  imagenUrl: elementos.imagenUrl,
-                  precio: elementos.precio,
-                  tienda: elementos.tienda,
-                  firebaseId: elementos.firebaseId,
-                  detalle: this.detalle
-                }
-                this.productoLista.push(this.productosDetalles);
-                this.obtenerImagenProductos();
-              });
-          }
-        });
-        this.producto = this.productoLista;
+              if (this.existeProductoLista == false) {
+                this.existeProductoLista = true;
+              }
+            }
+          });
+          this.producto = this.productoLista;
+          this.existeLista = true;
+        }
       });
   }
 

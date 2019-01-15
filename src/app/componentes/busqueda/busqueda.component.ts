@@ -187,6 +187,7 @@ export class BusquedaComponent implements OnInit {
   //OBTENER LOS DETALLES DEL PRODUCTOS
   obtenerProductoDetalle(idProducto: string) {
     this.cantidad = 1;
+    console.log(this.cantidad);
     this.producto.forEach(datos => {
       if (datos.firebaseId == idProducto) {
         this.detalleProducto = datos;
@@ -201,9 +202,9 @@ export class BusquedaComponent implements OnInit {
   }
 
   //DISMINUIR CANTIDAD DEL PRODUCTO
-  disminuirCantidad(cantidad: number) {
-    // console.log(cantidad)
-    if (cantidad <= 1) {
+  disminuirCantidad(cantidad: HTMLInputElement) {
+    this.cantidad = parseInt(cantidad.value)
+    if (this.cantidad <= 1) {
       this.cantidad = 1;
     } else {
       this.cantidad--;
@@ -211,9 +212,9 @@ export class BusquedaComponent implements OnInit {
   }
 
   //AUMENTAR CANTIDAD DEL PRODUCTO
-  aumentarCantidad(cantidad: number) {
-    // console.log(cantidad)
-    if (cantidad >= 1) {
+  aumentarCantidad(cantidad: HTMLInputElement) {
+    this.cantidad = parseInt(cantidad.value);
+    if (this.cantidad >= 1) {
       this.cantidad++;
     }
   }
@@ -232,13 +233,19 @@ export class BusquedaComponent implements OnInit {
   }
 
   //AGREGAR PRODUCTO A LA LISTA
-  agregarProducto(idProducto: string) {
+  agregarProducto(idProducto: string, cantidad: HTMLInputElement) {
     // console.log(this.isLogin)
     if (this.isLogin) {
       if (this.idListaActiva != '') {
-        if (confirm('¿Desea agregar el producto seleccionado a la lista "' + this.nombreListaActiva + '"?')) {
-          this.listaProducto.idProducto = idProducto;
-          this.listaService.agregarProducto(this.listaProducto, this.idListaActiva);
+        if (parseInt(cantidad.value) <= 0) {
+          alert('La cantidad debe ser mayor a cero.')
+        } else {
+          if (confirm('¿Desea agregar el producto seleccionado a la lista "' + this.nombreListaActiva + '"?')) {
+            this.listaProducto.idProducto = idProducto;
+            this.listaProducto.cantidad = parseInt(cantidad.value);
+            this.listaService.agregarProducto(this.listaProducto, this.idListaActiva);
+            document.getElementById('cerrarModal').click();
+          }
         }
       } else {
         alert('Debes tener una lista activa para agregarle productos')

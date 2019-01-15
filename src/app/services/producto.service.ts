@@ -56,11 +56,9 @@ export class ProductoService {
     this.afm.storage.ref().child(`Producto/${producto.idUsuario}/${producto.firebaseId}`)
       .put(imagen)
       .then(function () {
-        // File upload successfully
-        console.log('Se subio')
+        // console.log('Se subio')
       }).catch(function (error) {
-        // Uh-oh, an error occurred!
-        console.log('Error al subir')
+        // console.log('Error al subir')
       });
   }
 
@@ -69,16 +67,12 @@ export class ProductoService {
     return this.afm.storage.ref().child(`Producto/${idUsuario}/${idProducto}`)
       .getDownloadURL()
       .then(function (img) {
-        // File download successfully
-        console.log('Se descargo')
+        // console.log('Se descargo')
         return img;
       }).catch(function (error) {
-        // Uh-oh, an error occurred!
-        console.log('Error al descargar')
+        // console.log('Error al descargar')
         return error;
       });
-    // return this.afm.ref(`Producto/${idUsuario}/${idProducto}`)
-    //   .getDownloadURL();
   }
 
   //ELIMINAR IMAGEN DEL SERVIDOR
@@ -87,11 +81,9 @@ export class ProductoService {
     this.afm.storage.ref().child(`Producto/${idUsuario}/${idProducto}`)
       .delete()
       .then(function () {
-        // File deleted successfully
-        console.log('Se elimino')
+        // console.log('Se elimino')
       }).catch(function (error) {
-        // Uh-oh, an error occurred!
-        console.log('Error al eliminar')
+        // console.log('Error al eliminar')
       });
   }
 
@@ -100,16 +92,16 @@ export class ProductoService {
     let actualizarImagen: boolean = false;
     if (cambioImagen == 'SINCAMBIO') {
       //SIN CAMBIO DE IMAGEN
-      console.log('//SIN CAMBIO DE IMAGEN')
+      // console.log('//SIN CAMBIO DE IMAGEN')
       actualizarImagen = true;
     } else if (tipoCambio == 1) {
       //CAMBIO DE ARCHIVO A URL
-      console.log('//CAMBIO DE ARCHIVO A URL')
+      // console.log('//CAMBIO DE ARCHIVO A URL')
       this.eliminarImagen(producto.idUsuario, producto.firebaseId)
       actualizarImagen = true;
     } else if (tipoCambio == 2) {
       //CAMBIO DE ARCHIVO A ARCHIVO
-      console.log('//CAMBIO DE ARCHIVO A ARCHIVO')
+      // console.log('//CAMBIO DE ARCHIVO A ARCHIVO')
       if (imagen) {
         this.eliminarImagen(producto.idUsuario, producto.firebaseId)
         this.subirImagen(imagen, producto)
@@ -117,11 +109,11 @@ export class ProductoService {
       }
     } else if (tipoCambio == 3) {
       //CAMBIO DE URL A URL
-      console.log('//CAMBIO DE URL A URL')
+      // console.log('//CAMBIO DE URL A URL')
       actualizarImagen = true;
     } else if (tipoCambio == 4) {
       //CAMBIO DE URL A ARCHIVO
-      console.log('//CAMBIO DE URL A ARCHIVO')
+      // console.log('//CAMBIO DE URL A ARCHIVO')
       if (imagen) {
         this.subirImagen(imagen, producto)
         producto.imagenUrl = 'LOCAL';

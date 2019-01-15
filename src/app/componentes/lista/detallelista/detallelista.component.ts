@@ -34,13 +34,22 @@ export class DetallelistaComponent implements OnInit {
     fecha: null,
     tipo: ''
   }
+  detalleProducto: ListaProducto = {
+    id: '',
+    idProducto: '',
+    firebaseId: '',
+    cantidad: null
+  };
   listaProductos: ListaProducto[];
   producto: ProductoInterface[];
   idLista: string = '';
   isLogin: boolean = false;
   miLista: boolean = false;
+  existeProductoLista: boolean = false;
   nombreLista: string = '';
   uidUsuario: string = '';
+  cantidad: number = 0;
+  nombreProducto: string = '';
 
   constructor(
     private productoService: ProductoService,
@@ -52,7 +61,9 @@ export class DetallelistaComponent implements OnInit {
   ngOnInit() {
     this.idLista = this.route.snapshot.params['id'];
     this.obtenerLista();
-    this.obtenerProductosLista();
+    setTimeout(() => {
+      this.obtenerProductosLista();
+    }, 3000);
     this.isLogIn();
     this.producto = [];
   }
@@ -75,26 +86,30 @@ export class DetallelistaComponent implements OnInit {
     this.productoService.obtenerTodosProductos()
       .subscribe(datos => {
         this.producto = [];
-        datos.forEach(elementos => {
-          if (elementos) {
-            this.listaProductos.forEach(listaProducto => {
-              if (listaProducto.idProducto == elementos.firebaseId) {
-                this.productosDetalles = {
-                  idProducto: elementos.idProducto,
-                  idUsuario: elementos.idUsuario,
-                  nombre: elementos.nombre,
-                  categoria: elementos.categoria,
-                  precio: elementos.precio,
-                  cantidad: listaProducto.cantidad,
-                  tienda: elementos.tienda,
-                  firebaseId: elementos.firebaseId,
-                  detalle: []
+        if (datos) {
+          datos.forEach(elementos => {
+            if (elementos) {
+              this.listaProductos.forEach(listaProducto => {
+                if (listaProducto.idProducto == elementos.firebaseId) {
+                  this.productosDetalles = {
+                    idProducto: elementos.idProducto,
+                    idUsuario: elementos.idUsuario,
+                    nombre: elementos.nombre,
+                    categoria: elementos.categoria,
+                    precio: elementos.precio,
+                    cantidad: listaProducto.cantidad,
+                    tienda: elementos.tienda,
+                    firebaseId: elementos.firebaseId,
+                    detalle: []
+                  }
+                  this.producto.push(this.productosDetalles);
+                  this.existeProductoLista = true;
                 }
-                this.producto.push(this.productosDetalles);
-              }
-            })
-          }
-        });
+              })
+            }
+          });
+          this.existeProductoLista = true;
+        }
       });
   }
 
@@ -132,6 +147,49 @@ export class DetallelistaComponent implements OnInit {
     if (confirm('¿Seguro que desea eliminar este producto de la lista "' + this.lista.nombre + '" ?')) {
       this.listaService.eliminarProductoLista(this.idLista, idProducto);
       this.obtenerProductosLista();
+    }
+  }
+
+  //ACTUALIZAR PRODUCTO DE LA LISTA
+  actualizarProducto(idProducto: string, cantidad: HTMLInputElement) {
+    if (parseInt(cantidad.value) <= 0) {
+      alert('La cantidad debe ser mayor a cero.')
+    } else {
+      if (confirm('¿Seguro que desea atualizar la cantidad del producto "' + this.nombreProducto + '" ?')) {
+        this.detalleProducto.cantidad = parseInt(cantidad.value);
+        this.listaService.actualizarProductoLista(this.idLista, idProducto, this.detalleProducto);
+        this.obtenerProductosLista();
+        document.getElementById('cerrarModal').click();
+      }
+    }
+  }
+
+  //OBTENER LOS DETALLES DEL PRODUCTOS
+  obtenerProductoDetalle(idProducto: string) {
+    this.producto.forEach(datos => {
+      if (datos.firebaseId == idProducto) {
+        this.detalleProducto.idProducto = idProducto;
+        this.cantidad = datos.cantidad;
+        this.nombreProducto = datos.nombre;
+      }
+    });
+  }
+
+  //DISMINUIR CANTIDAD DEL PRODUCTO
+  disminuirCantidad(cantidad: HTMLInputElement) {
+    this.cantidad = parseInt(cantidad.value)
+    if (this.cantidad <= 1) {
+      this.cantidad = 1;
+    } else {
+      this.cantidad--;
+    }
+  }
+
+  //AUMENTAR CANTIDAD DEL PRODUCTO
+  aumentarCantidad(cantidad: HTMLInputElement) {
+    this.cantidad = parseInt(cantidad.value);
+    if (this.cantidad >= 1) {
+      this.cantidad++;
     }
   }
 

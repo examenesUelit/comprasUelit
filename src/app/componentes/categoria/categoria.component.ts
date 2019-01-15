@@ -56,6 +56,9 @@ export class CategoriaComponent implements OnInit {
   idListaActiva: string = '';
   isLogin: boolean = false;
   cantidad: number = 0;
+  existeLista: boolean = false;
+  existeProductoLista: boolean = false;
+  cargandoProductoLista: boolean = true;
 
   constructor(
     private productosService: ProductoService,
@@ -68,21 +71,29 @@ export class CategoriaComponent implements OnInit {
     this.detalleProducto.imagenUrl = '../../../assets/img/compras.png';
     this.IdCategoria = this.route.snapshot.params['id'];
     this.producto = [];
+    this.productoLista = [];
     this.isLogIn();
-    this.obtenerProducto();
+    setTimeout(() => {
+      this.obtenerProducto();
+    }, 3000);
     this.cantidad = 1;
     this.producto = this.productoLista;
   }
 
   //AGREGAR PRODUCTO A LA LISTA
-  agregarProducto(idProducto: string) {
+  agregarProducto(idProducto: string, cantidad: HTMLInputElement) {
     // console.log(this.isLogin)
     if (this.isLogin) {
       if (this.idListaActiva != '') {
-        if (confirm('¿Desea agregar el producto seleccionado a la lista "' + this.nombreListaActiva + '"?')) {
-          this.listaProducto.idProducto = idProducto;
-          this.listaProducto.cantidad = this.cantidad;
-          this.listaService.agregarProducto(this.listaProducto, this.idListaActiva);
+        if (parseInt(cantidad.value) <= 0) {
+          alert('La cantidad debe ser mayor a cero.')
+        } else {
+          if (confirm('¿Desea agregar el producto seleccionado a la lista "' + this.nombreListaActiva + '"?')) {
+            this.listaProducto.idProducto = idProducto;
+            this.listaProducto.cantidad = parseInt(cantidad.value);
+            this.listaService.agregarProducto(this.listaProducto, this.idListaActiva);
+            document.getElementById('cerrarModal').click();
+          }
         }
       } else {
         alert('Debes tener una lista activa para agregarle productos')
@@ -113,32 +124,41 @@ export class CategoriaComponent implements OnInit {
     this.productosService.obtenerTodosProductos()
       .subscribe(datos => {
         this.productoLista = [];
-        datos.forEach(elementos => {
-          if (elementos.categoria == this.IdCategoria) {
-            this.productosService.obtenerProductoDetalle(elementos.firebaseId)
-              .subscribe(detalles => {
-                this.detalle = [];
-                detalles.forEach(detalleElemento => {
-                  this.detallePrecio = detalleElemento
-                  this.detalle.push(this.detallePrecio)
+        this.cargandoProductoLista = false;
+        if (datos) {
+          datos.forEach(elementos => {
+            if (elementos.categoria == this.IdCategoria) {
+              this.productosService.obtenerProductoDetalle(elementos.firebaseId)
+                .subscribe(detalles => {
+                  this.detalle = [];
+                  if (detalles) {
+                    detalles.forEach(detalleElemento => {
+                      this.detallePrecio = detalleElemento
+                      this.detalle.push(this.detallePrecio)
+                    });
+                    this.productosDetalles = {
+                      idProducto: elementos.idProducto,
+                      idUsuario: elementos.idUsuario,
+                      nombre: elementos.nombre,
+                      categoria: elementos.categoria,
+                      imagenUrl: elementos.imagenUrl,
+                      precio: elementos.precio,
+                      tienda: elementos.tienda,
+                      firebaseId: elementos.firebaseId,
+                      detalle: this.detalle
+                    }
+                    this.productoLista.push(this.productosDetalles);
+                    this.obtenerImagenProductos();
+                    if (this.existeProductoLista == false) {
+                      this.existeProductoLista = true;
+                    }
+                  }
                 });
-                this.productosDetalles = {
-                  idProducto: elementos.idProducto,
-                  idUsuario: elementos.idUsuario,
-                  nombre: elementos.nombre,
-                  categoria: elementos.categoria,
-                  imagenUrl: elementos.imagenUrl,
-                  precio: elementos.precio,
-                  tienda: elementos.tienda,
-                  firebaseId: elementos.firebaseId,
-                  detalle: this.detalle
-                }
-                this.productoLista.push(this.productosDetalles);
-                this.obtenerImagenProductos();
-              });
-          }
-        });
-        this.producto = this.productoLista;
+              this.existeLista = true;
+            }
+          });
+          this.producto = this.productoLista;
+        }
       });
   }
 
@@ -176,9 +196,9 @@ export class CategoriaComponent implements OnInit {
   }
 
   //DISMINUIR CANTIDAD DEL PRODUCTO
-  disminuirCantidad(cantidad: number) {
-    // console.log(cantidad)
-    if (cantidad <= 1) {
+  disminuirCantidad(cantidad: HTMLInputElement) {
+    this.cantidad = parseInt(cantidad.value)
+    if (this.cantidad <= 1) {
       this.cantidad = 1;
     } else {
       this.cantidad--;
@@ -186,9 +206,9 @@ export class CategoriaComponent implements OnInit {
   }
 
   //AUMENTAR CANTIDAD DEL PRODUCTO
-  aumentarCantidad(cantidad: number) {
-    // console.log(cantidad)
-    if (cantidad >= 1) {
+  aumentarCantidad(cantidad: HTMLInputElement) {
+    this.cantidad = parseInt(cantidad.value);
+    if (this.cantidad >= 1) {
       this.cantidad++;
     }
   }

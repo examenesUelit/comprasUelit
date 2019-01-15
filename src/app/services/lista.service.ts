@@ -149,6 +149,15 @@ export class ListaService {
       }).catch(error => console.error(error));
   }
 
+  //ACTUALIZAR PRODUCTO DE LA LISTA
+  actualizarProductoLista(idLista: string, idProducto: string, producto: ListaProducto) {
+    this.listaProductoDoc = this.afs.collection('listas').doc(idLista).collection('productos').doc(idProducto);
+    this.listaProductoDoc.update(producto)
+      .then(() => {
+        alert('Producto actualizado correctamente');
+      }).catch(error => console.error(error));
+  }
+
   //OBTENER TODAS LAS LISTAS
   obtenerTodasListas() {
     this.listaCollection = this.afs.collection('listas', ref => ref);
